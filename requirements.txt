@@ -1,4 +1,4 @@
-clip @ git+https://github.com/openai/CLIP.git
+#clip @ git+https://github.com/openai/CLIP.git
 einops
 numpy
 open-clip-torch

@@ -23,7 +23,10 @@ from my_utils.dino_struct import DinoStructureLoss
 
 
 def main(args):
-    accelerator = Accelerator(gradient_accumulation_steps=args.gradient_accumulation_steps, log_with=args.report_to)
+    log_with = args.report_to
+    if isinstance(log_with, str) and log_with.lower() in {"none", "null", "false", "0", ""}:
+        log_with = None
+    accelerator = Accelerator(gradient_accumulation_steps=args.gradient_accumulation_steps, log_with=log_with)
     set_seed(args.seed)
 
     if accelerator.is_main_process:
@@ -147,7 +150,7 @@ def main(args):
     net_lpips, optimizer_gen, optimizer_disc, train_dataloader, lr_scheduler_gen, lr_scheduler_disc = accelerator.prepare(
         net_lpips, optimizer_gen, optimizer_disc, train_dataloader, lr_scheduler_gen, lr_scheduler_disc
     )
-    if accelerator.is_main_process:
+    if accelerator.is_main_process and accelerator.trackers:
         accelerator.init_trackers(args.tracker_project_name, config=dict(vars(args)))
 
     first_epoch = 0
