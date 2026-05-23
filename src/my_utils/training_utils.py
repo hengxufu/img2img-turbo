@@ -147,6 +147,7 @@ def parse_args_unpaired_training():
     parser.add_argument("--tracker_project_name", type=str, required=True)
     parser.add_argument("--validation_steps", type=int, default=500,)
     parser.add_argument("--validation_num_images", type=int, default=-1, help="Number of images to use for validation. -1 to use all images.")
+    parser.add_argument("--disable_dino_struct", action="store_true")
     parser.add_argument("--checkpointing_steps", type=int, default=500)
 
     # args for the optimization options
